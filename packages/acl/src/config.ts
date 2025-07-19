@@ -11,6 +11,12 @@ export const aclConfig = {
     update: ['instructor'],
     delete: ['instructor'],
   },
+  exams: {
+    create: ['instructor'],
+    read: ['instructor', 'student', 'moderator'],
+    update: ['instructor'],
+    delete: ['instructor'],
+  },
   lessons: {
     create: ['instructor'],
     read: ['instructor', 'student', 'moderator'],
