@@ -1,5 +1,5 @@
 {
-  "name": "monorepo-frontend-permission-access-control-example",
+  "name": "mfpace",
   "private": true,
   "scripts": {
     "build": "turbo run build",
