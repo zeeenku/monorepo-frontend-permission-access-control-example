@@ -1,0 +1,16 @@
+{
+  "name": "@repo/features",
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "type": "module",
+  "dependencies": {
+    "react": "^19.1.0"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6"
+  }
+}

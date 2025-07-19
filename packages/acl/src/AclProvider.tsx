@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo } from 'react'
+import React, { createContext, useContext, useMemo } from "react";
 import { defineAbilitiesFor, AppAbility } from './defineAbilitiesFor'
 
 const AclContext = createContext<AppAbility | null>(null)
