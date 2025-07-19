@@ -1,4 +1,16 @@
-export const aclConfig = {
+type Permissions = {
+  create: string[]
+  read: string[]
+  update: string[]
+  delete: string[]
+}
+
+type AclConfigType = {
+  [section: string]: Permissions
+}
+
+
+export const aclConfig: AclConfigType = {
   courses: {
     create: ['super-admin', 'admin', 'instructor'],
     read: ['super-admin', 'admin', 'instructor', 'moderator', 'student'],
@@ -29,6 +41,13 @@ export const aclConfig = {
     update: ['student', 'instructor'],
     delete: ['moderator'],
   },
+  dashboard: {
+    read: ['super-admin', 'admin'],
+    create: [],
+    update: [],
+    delete: [],
+  },
 } as const;
+
 export type AclConfig = typeof aclConfig;
-export type Roles = (typeof aclConfig)[keyof typeof aclConfig][keyof (typeof aclConfig)[keyof typeof aclConfig]][number]
+export type Roles = (typeof aclConfig)[keyof typeof aclConfig][keyof (typeof aclConfig)[keyof typeof aclConfig]][number];
