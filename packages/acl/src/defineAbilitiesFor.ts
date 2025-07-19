@@ -3,14 +3,14 @@ import {
   AbilityClass,
   PureAbility,
 } from '@casl/ability'
-import { aclConfig } from './config'
+import { aclConfig, Roles } from './config'
 
 export type Actions = keyof (typeof aclConfig)[keyof typeof aclConfig]
 export type Subjects = keyof typeof aclConfig
 
 export type AppAbility = PureAbility<[Actions, Subjects | 'all']>
 
-export function defineAbilitiesFor(role: string): AppAbility {
+export function defineAbilitiesFor(role: Roles): AppAbility {
   const { can, build } = new AbilityBuilder<AppAbility>(
     PureAbility as AbilityClass<AppAbility>
   )

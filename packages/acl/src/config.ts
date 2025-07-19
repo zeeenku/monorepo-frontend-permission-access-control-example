@@ -29,5 +29,6 @@ export const aclConfig = {
     update: ['student', 'instructor'],
     delete: ['moderator'],
   },
-}
+} as const;
 export type AclConfig = typeof aclConfig;
+export type Roles = (typeof aclConfig)[keyof typeof aclConfig][keyof (typeof aclConfig)[keyof typeof aclConfig]][number]

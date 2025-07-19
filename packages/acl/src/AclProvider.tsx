@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useMemo } from "react";
 import { defineAbilitiesFor, AppAbility } from './defineAbilitiesFor'
+import { Roles } from "./config";
 
 const AclContext = createContext<AppAbility | null>(null)
 const RoleContext = createContext<string | null>(null)
@@ -8,7 +9,7 @@ export const AclProvider = ({
   role,
   children,
 }: {
-  role: string
+  role: Roles
   children: React.ReactNode
 }) => {
   const ability = useMemo(() => defineAbilitiesFor(role), [role])
@@ -31,5 +32,5 @@ export const useAbility = () => {
 export const useRole = () => {
   const context = useContext(RoleContext)
   if (!context) throw new Error('useRole must be used within AclProvider')
-  return context
+  return context as Roles;
 }
