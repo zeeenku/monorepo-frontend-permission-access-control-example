@@ -1,3 +1,11 @@
+export type Actions = "create" | "read" | "update" | "delete";
+export type Subjects = "course" | "lesson" | "progress-report" | "setting" | "dadhboard";
+export type Roles = "super-admin" | "admin" | "coordinator" | "instructor" | "student";
+export type AclConfig = {
+  [S in Subjects]?: Partial<Record<Actions | 'read', Roles[]>>;
+};
+
+
 export const aclConfig = {
   courses: {
     create: ['super-admin', 'admin', 'instructor'],
@@ -40,8 +48,3 @@ export const aclConfig = {
   },
 } as const;
 
-
-export type AclConfig = typeof aclConfig;
-export type Actions = "create" | "read" | "update" | "delete";
-export type Subjects = keyof typeof aclConfig
-export type Roles = (typeof aclConfig)[keyof typeof aclConfig][keyof (typeof aclConfig)[keyof typeof aclConfig]][number];
