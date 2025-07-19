@@ -1,50 +1,34 @@
 export type Actions = "create" | "read" | "update" | "delete";
-export type Subjects = "course" | "lesson" | "progress-report" | "setting" | "dadhboard";
-export type Roles = "super-admin" | "admin" | "coordinator" | "instructor" | "student";
+export type Subjects = "course" | "lesson" | "progress-report" | "setting" | "dashboard";
+export type Roles = "super-admin" | "admin" | "moderator" | "instructor" | "student";
 export type AclConfig = {
   [S in Subjects]?: Partial<Record<Actions | 'read', Roles[]>>;
 };
 
-
-export const aclConfig = {
-  courses: {
+export const aclConfig: AclConfig = {
+  course: {
     create: ['super-admin', 'admin', 'instructor'],
     read: ['super-admin', 'admin', 'instructor', 'moderator', 'student'],
     update: ['super-admin', 'admin', 'instructor'],
-    delete: ['super-admin', 'admin'],
+    delete: ['super-admin'],
   },
-  quizzes: {
+  lesson: {
     create: ['instructor'],
     read: ['instructor', 'student', 'moderator'],
     update: ['instructor'],
     delete: ['instructor'],
   },
-  exams: {
-    create: ['instructor'],
-    read: ['instructor', 'student', 'moderator'],
-    update: ['instructor'],
-    delete: ['instructor'],
+  'progress-report': {
+    read: ['super-admin', 'admin', 'moderator', 'instructor', 'student'],
   },
-  lessons: {
-    create: ['instructor'],
-    read: ['instructor', 'student', 'moderator'],
-    update: ['instructor'],
-    delete: ['instructor'],
-  },
-  grades: {
-    create: ['instructor'],
-    read: ['instructor', 'moderator', 'student'],
-    update: ['instructor'],
-    delete: ['instructor'],
-  },
-  discussions: {
-    create: ['student', 'instructor'],
-    read: ['student', 'instructor', 'moderator'],
-    update: ['student', 'instructor'],
-    delete: ['moderator'],
+  setting: {
+    create: ['super-admin'],
+    read: ['super-admin', 'admin'],
+    update: ['super-admin', 'admin'],
+    delete: ['super-admin'],
   },
   dashboard: {
     read: ['super-admin', 'admin'],
   },
-} as const;
+};
 
