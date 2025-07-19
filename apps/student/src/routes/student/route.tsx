@@ -11,7 +11,7 @@ export function AdminLayout() {
   return (
     <AclProvider role="student">
       <div>
-        <h1>student Dashboard</h1>
+        <h1 className="pt-10 font-semibold text-2xl max-w-4xl mx-auto">Student Dashboard</h1>
         <Outlet />
       </div>
     </AclProvider>

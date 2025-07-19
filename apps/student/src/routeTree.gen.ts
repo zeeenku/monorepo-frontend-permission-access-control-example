@@ -16,7 +16,6 @@ import { Route as StudentSettingsRouteImport } from './routes/student/settings'
 import { Route as StudentProgressReportRouteImport } from './routes/student/progress-report'
 import { Route as StudentLessonsRouteImport } from './routes/student/lessons'
 import { Route as StudentCoursesRouteImport } from './routes/student/courses'
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo.tanstack-query'
 
 const StudentRouteRoute = StudentRouteRouteImport.update({
   id: '/student',
@@ -53,16 +52,10 @@ const StudentCoursesRoute = StudentCoursesRouteImport.update({
   path: '/courses',
   getParentRoute: () => StudentRouteRoute,
 } as any)
-const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/student': typeof StudentRouteRouteWithChildren
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/student/courses': typeof StudentCoursesRoute
   '/student/lessons': typeof StudentLessonsRoute
   '/student/progress-report': typeof StudentProgressReportRoute
@@ -71,7 +64,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/student/courses': typeof StudentCoursesRoute
   '/student/lessons': typeof StudentLessonsRoute
   '/student/progress-report': typeof StudentProgressReportRoute
@@ -82,7 +74,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/student': typeof StudentRouteRouteWithChildren
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/student/courses': typeof StudentCoursesRoute
   '/student/lessons': typeof StudentLessonsRoute
   '/student/progress-report': typeof StudentProgressReportRoute
@@ -94,7 +85,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/student'
-    | '/demo/tanstack-query'
     | '/student/courses'
     | '/student/lessons'
     | '/student/progress-report'
@@ -103,7 +93,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/demo/tanstack-query'
     | '/student/courses'
     | '/student/lessons'
     | '/student/progress-report'
@@ -113,7 +102,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/student'
-    | '/demo/tanstack-query'
     | '/student/courses'
     | '/student/lessons'
     | '/student/progress-report'
@@ -124,7 +112,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   StudentRouteRoute: typeof StudentRouteRouteWithChildren
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -178,13 +165,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentCoursesRouteImport
       parentRoute: typeof StudentRouteRoute
     }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -211,7 +191,6 @@ const StudentRouteRouteWithChildren = StudentRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   StudentRouteRoute: StudentRouteRouteWithChildren,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
