@@ -68,7 +68,7 @@ Introduced `AclProvider` and `RoleProvider` to provide:
 ### 5. **Can JSX Wrapper**
 
 ```tsx
-<Can I="read" a="courses">
+<Can I="read" a="course">
   <CourseList />
 </Can>
 ```
@@ -140,9 +140,7 @@ Each feature has specific CRUD capabilities managed via `aclConfig`.
 
 ```tsx
 <AclProvider role="admin">
-  <RoleProvider role="admin">
     {children}
-  </RoleProvider>
 </AclProvider>
 ```
 
