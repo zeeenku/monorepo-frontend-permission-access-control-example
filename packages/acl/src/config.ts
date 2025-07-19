@@ -11,17 +11,17 @@ export const aclConfig = {
     update: ['instructor'],
     delete: ['instructor'],
   },
+  lessons: {
+    create: ['instructor'],
+    read: ['instructor', 'student', 'moderator'],
+    update: ['instructor'],
+    delete: ['instructor'],
+  },
   grades: {
     create: ['instructor'],
     read: ['instructor', 'moderator', 'student'],
     update: ['instructor'],
     delete: ['instructor'],
-  },
-  users: {
-    create: ['super-admin'],
-    read: ['super-admin', 'admin'],
-    update: ['super-admin', 'admin'],
-    delete: ['super-admin'],
   },
   discussions: {
     create: ['student', 'instructor'],
