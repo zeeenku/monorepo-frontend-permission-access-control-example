@@ -4,6 +4,9 @@
 
 In large-scale projects, managing access control across multiple roles and features can quickly become complex and error-prone. This research-driven ACL (Access Control Layer) implementation was introduced to solve permission-related issues effectively and provide a scalable, centralized system for controlling feature-level access based on user roles.
 
+![Preview of ACL Integration](./preview.gif)
+
+
 ## 🎯 Why This Solution?
 
 Traditional access control implementations are often scattered, hardcoded, and tightly coupled with component logic. By introducing a clean, reusable ACL system:
