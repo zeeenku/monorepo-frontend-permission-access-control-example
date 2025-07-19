@@ -10,43 +10,89 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo.tanstack-query'
+import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
+import { Route as AdminProgressReportRouteImport } from './routes/admin/progress-report'
+import { Route as AdminLessonsRouteImport } from './routes/admin/lessons'
+import { Route as AdminCoursesRouteImport } from './routes/admin/courses'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProgressReportRoute = AdminProgressReportRouteImport.update({
+  id: '/admin/progress-report',
+  path: '/admin/progress-report',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLessonsRoute = AdminLessonsRouteImport.update({
+  id: '/admin/lessons',
+  path: '/admin/lessons',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCoursesRoute = AdminCoursesRouteImport.update({
+  id: '/admin/courses',
+  path: '/admin/courses',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/admin/courses': typeof AdminCoursesRoute
+  '/admin/lessons': typeof AdminLessonsRoute
+  '/admin/progress-report': typeof AdminProgressReportRoute
+  '/admin/settings': typeof AdminSettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/admin/courses': typeof AdminCoursesRoute
+  '/admin/lessons': typeof AdminLessonsRoute
+  '/admin/progress-report': typeof AdminProgressReportRoute
+  '/admin/settings': typeof AdminSettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/admin/courses': typeof AdminCoursesRoute
+  '/admin/lessons': typeof AdminLessonsRoute
+  '/admin/progress-report': typeof AdminProgressReportRoute
+  '/admin/settings': typeof AdminSettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo/tanstack-query'
+  fullPaths:
+    | '/'
+    | '/admin/courses'
+    | '/admin/lessons'
+    | '/admin/progress-report'
+    | '/admin/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo/tanstack-query'
-  id: '__root__' | '/' | '/demo/tanstack-query'
+  to:
+    | '/'
+    | '/admin/courses'
+    | '/admin/lessons'
+    | '/admin/progress-report'
+    | '/admin/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin/courses'
+    | '/admin/lessons'
+    | '/admin/progress-report'
+    | '/admin/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  AdminCoursesRoute: typeof AdminCoursesRoute
+  AdminLessonsRoute: typeof AdminLessonsRoute
+  AdminProgressReportRoute: typeof AdminProgressReportRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,11 +104,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/progress-report': {
+      id: '/admin/progress-report'
+      path: '/admin/progress-report'
+      fullPath: '/admin/progress-report'
+      preLoaderRoute: typeof AdminProgressReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/lessons': {
+      id: '/admin/lessons'
+      path: '/admin/lessons'
+      fullPath: '/admin/lessons'
+      preLoaderRoute: typeof AdminLessonsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/courses': {
+      id: '/admin/courses'
+      path: '/admin/courses'
+      fullPath: '/admin/courses'
+      preLoaderRoute: typeof AdminCoursesRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -70,7 +137,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  AdminCoursesRoute: AdminCoursesRoute,
+  AdminLessonsRoute: AdminLessonsRoute,
+  AdminProgressReportRoute: AdminProgressReportRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
