@@ -9,48 +9,199 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ModeratorRouteRouteImport } from './routes/moderator/route'
+import { Route as InstructorRouteRouteImport } from './routes/instructor/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo.tanstack-query'
+import { Route as ModeratorIndexRouteImport } from './routes/moderator/index'
+import { Route as InstructorIndexRouteImport } from './routes/instructor/index'
+import { Route as ModeratorSettingsRouteImport } from './routes/moderator/settings'
+import { Route as ModeratorProgressReportRouteImport } from './routes/moderator/progress-report'
+import { Route as ModeratorLessonsRouteImport } from './routes/moderator/lessons'
+import { Route as ModeratorCoursesRouteImport } from './routes/moderator/courses'
+import { Route as InstructorSettingsRouteImport } from './routes/instructor/settings'
+import { Route as InstructorProgressReportRouteImport } from './routes/instructor/progress-report'
+import { Route as InstructorLessonsRouteImport } from './routes/instructor/lessons'
+import { Route as InstructorCoursesRouteImport } from './routes/instructor/courses'
 
+const ModeratorRouteRoute = ModeratorRouteRouteImport.update({
+  id: '/moderator',
+  path: '/moderator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InstructorRouteRoute = InstructorRouteRouteImport.update({
+  id: '/instructor',
+  path: '/instructor',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
-  getParentRoute: () => rootRouteImport,
+const ModeratorIndexRoute = ModeratorIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ModeratorRouteRoute,
+} as any)
+const InstructorIndexRoute = InstructorIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => InstructorRouteRoute,
+} as any)
+const ModeratorSettingsRoute = ModeratorSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ModeratorRouteRoute,
+} as any)
+const ModeratorProgressReportRoute = ModeratorProgressReportRouteImport.update({
+  id: '/progress-report',
+  path: '/progress-report',
+  getParentRoute: () => ModeratorRouteRoute,
+} as any)
+const ModeratorLessonsRoute = ModeratorLessonsRouteImport.update({
+  id: '/lessons',
+  path: '/lessons',
+  getParentRoute: () => ModeratorRouteRoute,
+} as any)
+const ModeratorCoursesRoute = ModeratorCoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
+  getParentRoute: () => ModeratorRouteRoute,
+} as any)
+const InstructorSettingsRoute = InstructorSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => InstructorRouteRoute,
+} as any)
+const InstructorProgressReportRoute =
+  InstructorProgressReportRouteImport.update({
+    id: '/progress-report',
+    path: '/progress-report',
+    getParentRoute: () => InstructorRouteRoute,
+  } as any)
+const InstructorLessonsRoute = InstructorLessonsRouteImport.update({
+  id: '/lessons',
+  path: '/lessons',
+  getParentRoute: () => InstructorRouteRoute,
+} as any)
+const InstructorCoursesRoute = InstructorCoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
+  getParentRoute: () => InstructorRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/instructor': typeof InstructorRouteRouteWithChildren
+  '/moderator': typeof ModeratorRouteRouteWithChildren
+  '/instructor/courses': typeof InstructorCoursesRoute
+  '/instructor/lessons': typeof InstructorLessonsRoute
+  '/instructor/progress-report': typeof InstructorProgressReportRoute
+  '/instructor/settings': typeof InstructorSettingsRoute
+  '/moderator/courses': typeof ModeratorCoursesRoute
+  '/moderator/lessons': typeof ModeratorLessonsRoute
+  '/moderator/progress-report': typeof ModeratorProgressReportRoute
+  '/moderator/settings': typeof ModeratorSettingsRoute
+  '/instructor/': typeof InstructorIndexRoute
+  '/moderator/': typeof ModeratorIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/instructor/courses': typeof InstructorCoursesRoute
+  '/instructor/lessons': typeof InstructorLessonsRoute
+  '/instructor/progress-report': typeof InstructorProgressReportRoute
+  '/instructor/settings': typeof InstructorSettingsRoute
+  '/moderator/courses': typeof ModeratorCoursesRoute
+  '/moderator/lessons': typeof ModeratorLessonsRoute
+  '/moderator/progress-report': typeof ModeratorProgressReportRoute
+  '/moderator/settings': typeof ModeratorSettingsRoute
+  '/instructor': typeof InstructorIndexRoute
+  '/moderator': typeof ModeratorIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/instructor': typeof InstructorRouteRouteWithChildren
+  '/moderator': typeof ModeratorRouteRouteWithChildren
+  '/instructor/courses': typeof InstructorCoursesRoute
+  '/instructor/lessons': typeof InstructorLessonsRoute
+  '/instructor/progress-report': typeof InstructorProgressReportRoute
+  '/instructor/settings': typeof InstructorSettingsRoute
+  '/moderator/courses': typeof ModeratorCoursesRoute
+  '/moderator/lessons': typeof ModeratorLessonsRoute
+  '/moderator/progress-report': typeof ModeratorProgressReportRoute
+  '/moderator/settings': typeof ModeratorSettingsRoute
+  '/instructor/': typeof InstructorIndexRoute
+  '/moderator/': typeof ModeratorIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo/tanstack-query'
+  fullPaths:
+    | '/'
+    | '/instructor'
+    | '/moderator'
+    | '/instructor/courses'
+    | '/instructor/lessons'
+    | '/instructor/progress-report'
+    | '/instructor/settings'
+    | '/moderator/courses'
+    | '/moderator/lessons'
+    | '/moderator/progress-report'
+    | '/moderator/settings'
+    | '/instructor/'
+    | '/moderator/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo/tanstack-query'
-  id: '__root__' | '/' | '/demo/tanstack-query'
+  to:
+    | '/'
+    | '/instructor/courses'
+    | '/instructor/lessons'
+    | '/instructor/progress-report'
+    | '/instructor/settings'
+    | '/moderator/courses'
+    | '/moderator/lessons'
+    | '/moderator/progress-report'
+    | '/moderator/settings'
+    | '/instructor'
+    | '/moderator'
+  id:
+    | '__root__'
+    | '/'
+    | '/instructor'
+    | '/moderator'
+    | '/instructor/courses'
+    | '/instructor/lessons'
+    | '/instructor/progress-report'
+    | '/instructor/settings'
+    | '/moderator/courses'
+    | '/moderator/lessons'
+    | '/moderator/progress-report'
+    | '/moderator/settings'
+    | '/instructor/'
+    | '/moderator/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  InstructorRouteRoute: typeof InstructorRouteRouteWithChildren
+  ModeratorRouteRoute: typeof ModeratorRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/moderator': {
+      id: '/moderator'
+      path: '/moderator'
+      fullPath: '/moderator'
+      preLoaderRoute: typeof ModeratorRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/instructor': {
+      id: '/instructor'
+      path: '/instructor'
+      fullPath: '/instructor'
+      preLoaderRoute: typeof InstructorRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -58,19 +209,123 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport
-      parentRoute: typeof rootRouteImport
+    '/moderator/': {
+      id: '/moderator/'
+      path: '/'
+      fullPath: '/moderator/'
+      preLoaderRoute: typeof ModeratorIndexRouteImport
+      parentRoute: typeof ModeratorRouteRoute
+    }
+    '/instructor/': {
+      id: '/instructor/'
+      path: '/'
+      fullPath: '/instructor/'
+      preLoaderRoute: typeof InstructorIndexRouteImport
+      parentRoute: typeof InstructorRouteRoute
+    }
+    '/moderator/settings': {
+      id: '/moderator/settings'
+      path: '/settings'
+      fullPath: '/moderator/settings'
+      preLoaderRoute: typeof ModeratorSettingsRouteImport
+      parentRoute: typeof ModeratorRouteRoute
+    }
+    '/moderator/progress-report': {
+      id: '/moderator/progress-report'
+      path: '/progress-report'
+      fullPath: '/moderator/progress-report'
+      preLoaderRoute: typeof ModeratorProgressReportRouteImport
+      parentRoute: typeof ModeratorRouteRoute
+    }
+    '/moderator/lessons': {
+      id: '/moderator/lessons'
+      path: '/lessons'
+      fullPath: '/moderator/lessons'
+      preLoaderRoute: typeof ModeratorLessonsRouteImport
+      parentRoute: typeof ModeratorRouteRoute
+    }
+    '/moderator/courses': {
+      id: '/moderator/courses'
+      path: '/courses'
+      fullPath: '/moderator/courses'
+      preLoaderRoute: typeof ModeratorCoursesRouteImport
+      parentRoute: typeof ModeratorRouteRoute
+    }
+    '/instructor/settings': {
+      id: '/instructor/settings'
+      path: '/settings'
+      fullPath: '/instructor/settings'
+      preLoaderRoute: typeof InstructorSettingsRouteImport
+      parentRoute: typeof InstructorRouteRoute
+    }
+    '/instructor/progress-report': {
+      id: '/instructor/progress-report'
+      path: '/progress-report'
+      fullPath: '/instructor/progress-report'
+      preLoaderRoute: typeof InstructorProgressReportRouteImport
+      parentRoute: typeof InstructorRouteRoute
+    }
+    '/instructor/lessons': {
+      id: '/instructor/lessons'
+      path: '/lessons'
+      fullPath: '/instructor/lessons'
+      preLoaderRoute: typeof InstructorLessonsRouteImport
+      parentRoute: typeof InstructorRouteRoute
+    }
+    '/instructor/courses': {
+      id: '/instructor/courses'
+      path: '/courses'
+      fullPath: '/instructor/courses'
+      preLoaderRoute: typeof InstructorCoursesRouteImport
+      parentRoute: typeof InstructorRouteRoute
     }
   }
 }
 
+interface InstructorRouteRouteChildren {
+  InstructorCoursesRoute: typeof InstructorCoursesRoute
+  InstructorLessonsRoute: typeof InstructorLessonsRoute
+  InstructorProgressReportRoute: typeof InstructorProgressReportRoute
+  InstructorSettingsRoute: typeof InstructorSettingsRoute
+  InstructorIndexRoute: typeof InstructorIndexRoute
+}
+
+const InstructorRouteRouteChildren: InstructorRouteRouteChildren = {
+  InstructorCoursesRoute: InstructorCoursesRoute,
+  InstructorLessonsRoute: InstructorLessonsRoute,
+  InstructorProgressReportRoute: InstructorProgressReportRoute,
+  InstructorSettingsRoute: InstructorSettingsRoute,
+  InstructorIndexRoute: InstructorIndexRoute,
+}
+
+const InstructorRouteRouteWithChildren = InstructorRouteRoute._addFileChildren(
+  InstructorRouteRouteChildren,
+)
+
+interface ModeratorRouteRouteChildren {
+  ModeratorCoursesRoute: typeof ModeratorCoursesRoute
+  ModeratorLessonsRoute: typeof ModeratorLessonsRoute
+  ModeratorProgressReportRoute: typeof ModeratorProgressReportRoute
+  ModeratorSettingsRoute: typeof ModeratorSettingsRoute
+  ModeratorIndexRoute: typeof ModeratorIndexRoute
+}
+
+const ModeratorRouteRouteChildren: ModeratorRouteRouteChildren = {
+  ModeratorCoursesRoute: ModeratorCoursesRoute,
+  ModeratorLessonsRoute: ModeratorLessonsRoute,
+  ModeratorProgressReportRoute: ModeratorProgressReportRoute,
+  ModeratorSettingsRoute: ModeratorSettingsRoute,
+  ModeratorIndexRoute: ModeratorIndexRoute,
+}
+
+const ModeratorRouteRouteWithChildren = ModeratorRouteRoute._addFileChildren(
+  ModeratorRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  InstructorRouteRoute: InstructorRouteRouteWithChildren,
+  ModeratorRouteRoute: ModeratorRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
