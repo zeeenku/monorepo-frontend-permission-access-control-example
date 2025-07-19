@@ -37,6 +37,6 @@ function CoursesPage() {
   );
 }
 
-export const Route = createFileRoute('/admin/courses')({
+export const Route = createFileRoute('/super-admin/courses')({
   component: CoursesPage,
 });
