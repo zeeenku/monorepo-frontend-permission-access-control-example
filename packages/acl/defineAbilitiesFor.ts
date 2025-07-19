@@ -3,41 +3,24 @@ import {
   AbilityClass,
   PureAbility,
 } from '@casl/ability'
+import { aclConfig } from './config'
 
-export type Actions = 'manage' | 'create' | 'read' | 'update' | 'delete'
+export type Actions = keyof (typeof aclConfig)[keyof typeof aclConfig]
+export type Subjects = keyof typeof aclConfig
 
-export type Subjects = 'User' | 'Course' | 'Lesson' | 'Comment' | 'all'
-
-export type AppAbility = PureAbility<[Actions, Subjects]>
+export type AppAbility = PureAbility<[Actions, Subjects | 'all']>
 
 export function defineAbilitiesFor(role: string): AppAbility {
-  const { can, cannot, build } = new AbilityBuilder<AppAbility>(
+  const { can, build } = new AbilityBuilder<AppAbility>(
     PureAbility as AbilityClass<AppAbility>
   )
 
-  switch (role) {
-    case 'super-admin':
-      can('manage', 'all')
-      break
-    case 'admin':
-      can('manage', 'Course')
-      can('read', 'User')
-      break
-    case 'moderator':
-      can('read', 'Comment')
-      can('delete', 'Comment')
-      break
-    case 'instructor':
-      can('create', 'Lesson')
-      can('update', 'Lesson')
-      can('read', 'Course')
-      break
-    case 'student':
-      can('read', 'Course')
-      can('read', 'Lesson')
-      break
-    default:
-      break
+  for (const [subject, actions] of Object.entries(aclConfig)) {
+    for (const [action, roles] of Object.entries(actions)) {
+      if (roles.includes(role)) {
+        can(action as Actions, subject as Subjects)
+      }
+    }
   }
 
   return build()
