@@ -3,10 +3,8 @@ import {
   AbilityClass,
   PureAbility,
 } from '@casl/ability'
-import { aclConfig, Roles } from './config'
+import { aclConfig, Actions, Roles, Subjects } from './config'
 
-export type Actions = keyof (typeof aclConfig)[keyof typeof aclConfig]
-export type Subjects = keyof typeof aclConfig
 
 export type AppAbility = PureAbility<[Actions, Subjects | 'all']>
 

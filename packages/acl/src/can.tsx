@@ -1,6 +1,6 @@
 import { useAbility } from './AclProvider'
-import type { Actions, Subjects } from './defineAbilitiesFor'
 import { ReactNode } from 'react'
+import { Actions, Subjects } from './config'
 
 export const Can = ({
   I,
