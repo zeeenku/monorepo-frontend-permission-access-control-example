@@ -1,135 +1,151 @@
-# Turborepo starter
+# Access Control Layer (ACL) Integration for React Apps in a Monorepo
 
-This Turborepo starter is maintained by the Turborepo core team.
+## 🔍 Overview
 
-## Using this example
+In large-scale projects, managing access control across multiple roles and features can quickly become complex and error-prone. This research-driven ACL (Access Control Layer) implementation was introduced to solve permission-related issues effectively and provide a scalable, centralized system for controlling feature-level access based on user roles.
 
-Run the following command:
+## 🎯 Why This Solution?
 
-```sh
-npx create-turbo@latest
+Traditional access control implementations are often scattered, hardcoded, and tightly coupled with component logic. By introducing a clean, reusable ACL system:
+
+- ✅ We avoid permission-checking duplication across the app.
+- ✅ We make the UI reactive to access rights.
+- ✅ We provide a clear definition of what each role can or cannot do.
+- ✅ We improve scalability and maintainability for growing teams and applications.
+
+## 🧩 Core Packages Used
+
+- [`@casl/ability`](https://github.com/stalniy/casl): Provides a powerful and flexible permission definition system.
+- [`@tanstack/react-router`](https://tanstack.com/router): Modern routing library used to build the navigation structure.
+
+## 🛠️ Tools & Tech Stack
+
+- React
+- TypeScript
+- TailwindCSS
+- CASL
+- TanStack Router
+- Vite (or Next.js / React Scripts as adaptable)
+
+## 🏗️ What Was Implemented
+
+### 1. **Role-Based Ability Config**
+
+We created a central `aclConfig` which maps each role to their allowed actions per subject (feature). For example:
+
+```ts
+export const aclConfig = {
+  admin: {
+    courses: ['create', 'read', 'update', 'delete'],
+    lessons: ['read', 'update'],
+    ...
+  },
+  user: {
+    courses: ['read'],
+  },
+};
 ```
 
-## What's inside?
+### 2. **Ability Definition Function**
 
-This Turborepo includes the following packages/apps:
+We define `defineAbilitiesFor(role)` to dynamically return an `Ability` instance from `@casl/ability` based on the role’s rules.
 
-### Apps and Packages
+### 3. **React Context Providers**
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+Introduced `AclProvider` and `RoleProvider` to provide:
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+- ✅ Central access to the current role's ability
+- ✅ Ability checks via custom hooks
 
-### Utilities
+### 4. **Custom Hooks**
 
-This Turborepo has some additional tools already setup for you:
+- `useCan(subject, action)` – Checks if current role can perform action on subject
+- `useRole()` – Gets the current user's role from context
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+### 5. **Can JSX Wrapper**
 
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+```tsx
+<Can I="read" a="courses">
+  <CourseList />
+</Can>
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+This declarative component hides content from unauthorized roles.
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+### 6. **Folder-Based Route Layouts per Role**
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+Using TanStack Router’s `__root.tsx` layout convention, we dynamically wrap role-specific routes under context providers (`admin/__root.tsx`, `super-admin/__root.tsx`, etc.)
 
-### Develop
+### 7. **UI Components Per Feature**
 
-To develop all apps and packages, run the following command:
+Each feature (e.g. courses) has CRUD-specific components:
 
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```ts
+CourseFormCreate
+CourseFormRead
+CourseFormUpdate
+CourseFormDelete
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+Switchable with tabs or route views.
+
+## 👥 Roles Supported
+
+- `admin`
+- `super-admin`
+- `editor`
+- `user`
+- `guest`
+
+## 📦 Features Supported
+
+- `courses`
+- `lessons`
+- `progress`
+- `report`
+- `settings`
+
+Each feature has specific CRUD capabilities managed via `aclConfig`.
+
+## 📁 Project Structure
 
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+/packages
+  /acl                → ACL system (contexts, hooks, config)
+  /features           → Each feature’s UI components
+/app
+  /admin              → Super admin/ Admin routes and layout
+  /moderator        → Moderator/ Instructor routes and layout
+  /student        → Student routes and layout
 ```
 
-### Remote Caching
+## ✅ Benefits
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+- Centralized permissions control
+- Clean, declarative access checks
+- Reusable across any route or component
+- Easy to maintain and extend for future roles/features
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+---
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+## 🚀 Getting Started
 
-```
-cd my-turborepo
+1. Install dependencies:
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
+2. Wrap root layouts with appropriate providers:
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+```tsx
+<AclProvider role="admin">
+  <RoleProvider role="admin">
+    {children}
+  </RoleProvider>
+</AclProvider>
 ```
 
-## Useful Links
+3. Use the `Can` component or `useCan` in your features.
 
-Learn more about the power of Turborepo:
+---
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+
+**Made with ☕ and 🔥 by Zenku**
